@@ -1,0 +1,30 @@
+# Hospital management System
+import firebase_admin
+from firebase_admin import credentials,firestore
+
+cred = credentials.Certificate("/content/hospital-management-syst-eb379-firebase-adminsdk-uoqbj-3c09c9a31b.json")
+firebase_admin.initialize_app(cred)
+store = firestore.client()
+dit = {}
+
+dit["name"] = "XYZ ABC"
+dit["age"] = "24"
+dit["problem"] = "Fever"
+dit["blood group"] = "B+"
+dit["gender"]="male"
+dit["weight"]="70"
+dit["createdAt"] = firestore.SERVER_TIMESTAMP
+
+dit
+# For writing the data
+store.collection("Record").add(dit)
+
+# for reading the data, we have used this lone of code
+docs = store.collection("Record").stream()
+
+all_dit = []
+for doc in docs:
+  print(doc.to_dict())
+  all_dit.append(doc.to_dict())
+  
+all_dit
